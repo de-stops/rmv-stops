@@ -28,36 +28,32 @@ const queryStops = function(minx, miny, maxx, maxy, callback) {
 };
 
 const exportStops = function(stops) {
-	const result = json2csv({ data: stops, fields: ['extId', "planId", "puic", "prodclass", "name", "urlname", "x", "y"] });
+	const result = json2csv({ data: stops, fields: ["stop_id", "stop_name", "stop_lon", "stop_lat"] });
 	process.stdout.write(result);
 }
 
 const retrieveStops = function(minx, miny, maxx, maxy) {
 	const stops = [];
-	const stopsByExtId = {};
-	const callback = stop => {
-		stop.extId = Number(stop.extId);
-		stop.planId = Number(stop.planId);
-		stop.x = Number(stop.x)/1000000;
-		stop.y = Number(stop.y)/1000000;
-		stop.prodclass = Number(stop.prodclass);
-		stop.puic = Number(stop.puic);
+	const stopsById = {};
+	const callback = s => {
+		var stopId = s.extId;
+		var stop = {};	
+		stop.stop_id = s.extId;
+		stop.stop_name = s.name
+		stop.stop_lon = Number(s.x)/1000000;
+		stop.stop_lat = Number(s.y)/1000000;
 
-		const extId = stop.extId;
-		const existingStop = stopsByExtId[extId]
+		const existingStop = stopsById[stopId]
 		if (existingStop &&(
-			stop.x !== existingStop.x ||
-			stop.y !== existingStop.y ||
-			stop.name !== existingStop.name ||
-			stop.urlname !== existingStop.urlname ||
-			stop.prodclass !== existingStop.prodclass ||
-			stop.puic !== existingStop.puic ||
-			stop.planId !== existingStop.planId)) {
-			throw new Error("Found existing stop with extId " + extId);
+			stop.stop_id !== existingStop.stop_id ||
+			stop.stop_name !== existingStop.stop_name ||
+			stop.stop_lon !== existingStop.stop_lon ||
+			stop.stop_lat !== existingStop.stop_lat)) {
+			throw new Error("Found existing stop with id " + stopId);
 		}
 		else {
 			// console.log("Got new stop with extId:" + extId);
-			stopsByExtId[extId] = stop;
+			stopsById[stopId] = stop;
 			stops.push(stop);
 		}
 	};

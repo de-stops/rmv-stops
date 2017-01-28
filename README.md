@@ -1,6 +1,6 @@
 # rmv-stops
 
-This is a simple script to download all RMV stops as CSV.
+This is a simple script to download all [RMV](https://www.rmv.de) stops as [GTFS-compatible CSV](https://developers.google.com/transit/gtfs/reference/stops-file).
 
 The script uses the following endpoint:
 
@@ -13,8 +13,8 @@ It starts from bounding box `(5000000, 47000000, 15000000, 56000000)` and works 
 The script produces CSV output in the following format:
 
 ```
-"extId","planId","puic","prodclass","name","urlname","x","y"
-3004301,1484932330,80,140,"Friedrichsdorf-Seulberg Bahnhof","Friedrichsdorf-Seulberg%20Bahnhof",8.646346,50.241592
+"stop_id","stop_name","stop_lon","stop_lat"
+"3004301","Friedrichsdorf-Seulberg Bahnhof",8.646346,50.241592
 ```
 
 # Usage
