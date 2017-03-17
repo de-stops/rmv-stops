@@ -1,4 +1,4 @@
-CREATE TEMPORARY TABLE STOPS (stop_id char(7), stop_name varchar, stop_lon double precision, stop_lat double precision, stop_code varchar);
+CREATE TEMPORARY TABLE STOPS (stop_id varchar, stop_name varchar, stop_lon double precision, stop_lat double precision, stop_code varchar);
 
 COPY
 	STOPS
